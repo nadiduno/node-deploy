@@ -9,7 +9,7 @@ Tecnologias usadas no backend 👩‍💻
 <div>
   <img 
     alt="Dashboard do site de render"
-    src="https://github.com/nadiduno/portfolionadiduno/blob/main/.github/ImgApp1.png" 
+    src="https://github.com/nadiduno/node-deploy/blob/main/.github/ImgApp1.png" 
     width="70%"
   >
 </div>
@@ -20,7 +20,7 @@ Tecnologias usadas no backend 👩‍💻
 <div>
   <img 
     alt="Dashboard de Thunder Client"
-    src="https://github.com/nadiduno/portfolionadiduno/blob/main/.github/ImgApp2.png" 
+    src="https://github.com/nadiduno/node-deploy/blob/main/.github/ImgApp2.png" 
     width="70%"
   >
 </div>
