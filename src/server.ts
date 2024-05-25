@@ -13,10 +13,14 @@ interface UserParams {
 
 //READ
 app.get('/users', async () => {
-  const users = await prisma.user.findMany()
-
-  return { users }
-})
+  try {
+    const users = await prisma.user.findMany();
+    return { users };
+  } catch (error) {
+    console.error('Error when searching for users: ', error);
+    return { message: 'Internal server error' };
+  }
+});
 
 
 //CREATE
@@ -24,20 +28,22 @@ app.post('/users', async (request, reply) => {
   const createUserSchema = z.object({
     name: z.string(),
     email: z.string().email(),
-  })
+  });
 
-  const { name, email } = createUserSchema.parse(request.body)
-
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-    }
-  })
-
-  return reply.status(201).send()
-})
-
+  try {
+    const { name, email } = createUserSchema.parse(request.body);
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+      },
+    });
+    return reply.status(201).send();
+  } catch (error) {
+    console.error('Error when creating user: ', error);
+    return reply.status(500).send({ message: 'Internal server error' });
+  }
+});
 
 
 //UPDATE
@@ -45,23 +51,49 @@ app.put('/users/:id', async (request, reply) => {
   const { id } = request.params as { id: string };
   const { name, email } = request.body as UserParams;
 
-  const updatedUser = await prisma.user.update({
-    where: { id: id }, 
-    data: { name, email },
-  });
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+    });
 
-  return reply.status(200).send(updatedUser);
+    if (!existingUser) {
+      return reply.status(404).send({ message: 'User not found' });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: id },
+      data: { name, email },
+    });
+
+    return reply.status(200).send(updatedUser);
+  } catch (error) {
+    console.error('Error when updating user: ', error);
+    return reply.status(500).send({ message: 'Internal server error' });
+  }
 });
 
 //DELETE
 app.delete('/users/:id', async (request, reply) => {
   const { id } = request.params as { id: string };
 
-  const deletedUser = await prisma.user.delete({
-    where: { id: id }, 
-  });
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+    });
 
-  return reply.status(200).send(deletedUser);
+    if (!existingUser) {
+      return reply.status(404).send({ message: 'User not found' });
+    }
+
+    const deletedUser = await prisma.user.delete({
+      where: { id: id },
+    });
+
+    return reply.status(200).send(deletedUser);
+  } catch (error) {
+    console.error('Error when deleting user: ', error);
+    return reply.status(500).send({ message: 'Internal server error' });
+  }
 });
 
 
