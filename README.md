@@ -12,6 +12,7 @@ Tecnologias usadas no backend 👩‍💻
     src="https://github.com/nadiduno/node-deploy/blob/main/.github/ImgApp1.png" 
     width="70%"
   >
+  <br />
 </div>
 
 <br />
@@ -23,4 +24,5 @@ Tecnologias usadas no backend 👩‍💻
     src="https://github.com/nadiduno/node-deploy/blob/main/.github/ImgApp2.png" 
     width="70%"
   >
+  <br />
 </div>
